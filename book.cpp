@@ -1,5 +1,6 @@
 #include "book.h"
 #include <iostream>
+#include <sstream>
 
 
 //Constructeurs
@@ -47,4 +48,55 @@ void Book::setAvailability(bool isAvailable) {
 
 void Book::setBorrowerId(const std::string& borrowerId) {
     this->borrowerId = borrowerId;
+}
+
+//methode checkout: emprunter un livre
+
+void Book::checkOut(const std::string& borrowerId) {
+    if (isAvailable)
+    {
+        this->isAvailable = false;
+        this->borrowerId = borrowerId;
+    }
+    else {
+        std::cout << "Book is not available: already taken." << std::endl;
+    }
+}
+
+
+//methode returnBook: retourne le livre
+void Book::returnBook() {
+    //regarder si le livre est emprunté
+        if (!isAvailable) {
+            this->isAvailable = true;
+            this->borrowerId = "";
+        }
+}
+
+
+//methode toString: retourne une chaine de caracteres representant le livre
+std::string Book::toString() const {
+    std::string stringPattern = "\nTitre: " + title + "\nAuteur(e): " + author + "\nISBN: " + isbn + "\nDisponible: " + (isAvailable ? "Oui " : "Non ") + (isAvailable ? "": ("Code de l'emprunteur: " + borrowerId));
+    return stringPattern;
+}
+
+
+//methode toFileFormat
+std::string Book::toFileFormat() const {
+    std::string fileFormat = title + "|" + author + "|" + isbn + "|" + (isAvailable ? "Oui" : "Non") + "|" + borrowerId;
+    return fileFormat;
+}
+
+//methode fromFileFormat
+void Book::fromFileFormat(const std::string& line) {
+    std::stringstream ss(line);
+    std::string isAvailableStr;
+
+    std::getline(ss, title, '|');
+    std::getline(ss, author, '|');
+    std::getline(ss, isbn, '|');
+    std::getline(ss, isAvailableStr, '|');
+    std::getline(ss, borrowerId);
+
+    isAvailable = (isAvailableStr == "1");
 }
