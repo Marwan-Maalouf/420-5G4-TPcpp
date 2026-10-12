@@ -41,8 +41,6 @@ public:
     void fromFileFormat(const string& line);
     bool compareTitle(const Book& other) const;
     bool compareAuthor(const Book& other) const;
-    void sortByTitle(vector<Book>& books);
-    void sortByAuthor(vector<Book>& books);
 };
 
 #endif
