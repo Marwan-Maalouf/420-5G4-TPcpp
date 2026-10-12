@@ -8,6 +8,13 @@ using namespace std;
 // Default constructor
 User::User() : name(""), userId("") {}
 
+int User::nextUserId = 1;
+
+// Constructeur qui génère un ID unique
+User::User(const string& name) : name(name) {
+    userId = "user_" + to_string(nextUserId++);
+}
+
 // Parameterized constructor
 User::User(const string& name, const string& userId) 
     : name(name), userId(userId) {}
