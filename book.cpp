@@ -1,6 +1,7 @@
 #include "book.h"
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 
 //Constructeurs
@@ -99,4 +100,27 @@ void Book::fromFileFormat(const std::string& line) {
     std::getline(ss, borrowerId);
 
     isAvailable = (isAvailableStr == "1");
+}
+//methode compareTitle: comparer les titres
+bool Book::compareTitle(const Book& other) const {
+    return this->title == other.title;
+}
+
+//methode compareAuthor: comparer les auteurs
+bool Book::compareAuthor(const Book& other) const {
+    return this->author == other.author;
+}
+
+//methode sortByTitle: trier les livres par titre
+void Book::sortByTitle(std::vector<Book>& books) {
+    std::sort(books.begin(), books.end(), [](const Book& a, const Book& b) {
+        return a.compareTitle(b);
+    });
+}
+
+//methode sortByAuthor: trier les livres par auteur
+void Book::sortByAuthor(std::vector<Book>& books) {
+    std::sort(books.begin(), books.end(), [](const Book& a, const Book& b) {
+        return a.compareAuthor(b);
+    });
 }

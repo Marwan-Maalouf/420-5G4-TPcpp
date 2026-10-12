@@ -2,6 +2,7 @@
 #include <limits>
 #include <string>
 #include <filesystem>
+#include <algorithm>
 
 #include "library.h"
 #include "filemanager.h"

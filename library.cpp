@@ -148,15 +148,25 @@ bool Library::returnBook(const string& isbn) {
 
 // Display all books
 void Library::displayAllBooks() {
-    if (books.empty()) {
+    vector<Book*> allBooks = getAllBooks();
+    if (allBooks.empty()) {
         cout << "Aucun livre dans la bibliothèque.\n";
         return;
     }
-    
+
+    // Tri 1 : par auteur
+    sort(allBooks.begin(), allBooks.end(), [](const Book* a, const Book* b) {
+        return a->compareAuthor(*b);
+    });
+    // Tri 2 : par titre (stable : garde l'ordre des auteurs)
+    stable_sort(allBooks.begin(), allBooks.end(), [](const Book* a, const Book* b) {
+        return a->compareTitle(*b);
+    });
+
     cout << "\n=== TOUS LES LIVRES ===\n";
-    for (size_t i = 0; i < books.size(); ++i) {
+    for (size_t i = 0; i < allBooks.size(); ++i) {
         cout << "\nLivre " << (i + 1) << " :\n";
-        cout << books[i]->toString() << "\n";
+        cout << allBooks[i]->toString() << "\n";
         cout << "-------------------------\n";
     }
 }
@@ -164,12 +174,21 @@ void Library::displayAllBooks() {
 // Display available books
 void Library::displayAvailableBooks() {
     auto available = getAvailableBooks();
-    
+
     if (available.empty()) {
         cout << "Aucun livre disponible pour emprunt.\n";
         return;
     }
-    
+
+    // Tri 1 : par auteur
+    sort(available.begin(), available.end(), [](const Book* a, const Book* b) {
+        return a->compareAuthor(*b);
+    });
+    // Tri 2 : par titre (stable : garde l'ordre des auteurs)
+    stable_sort(available.begin(), available.end(), [](const Book* a, const Book* b) {
+        return a->compareTitle(*b);
+    });
+
     cout << "\n=== LIVRES DISPONIBLES ===\n";
     for (size_t i = 0; i < available.size(); ++i) {
         cout << "\nLivre " << (i + 1) << " :\n";
