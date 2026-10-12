@@ -90,6 +90,7 @@ int main(int argc, char* argv[]) {
 
     Library library;
     FileManager fileManager(booksFile, usersFile);
+    bool canSaveData = !booksFile.empty() && !usersFile.empty();
     
     // Load existing data
     cout << "Chargement des données de la bibliothèque...\n";
@@ -258,9 +259,11 @@ int main(int argc, char* argv[]) {
                 pauseForInput();
                 break;
             }
-            
-            case 12: { // Save Data
-                if (fileManager.saveLibraryData(library)) {
+            case 12: {
+                if (!canSaveData) {
+                    cout << "Impossible de sauvegarder : aucun répertoire de données (--data-dir).\n";
+                    logger.log("ERREUR SAUVEGARDE", "Répertoire de données non spécifié.");
+                } else if (fileManager.saveLibraryData(library)) {
                     cout << "Données de la bibliothèque sauvegardées avec succès !\n";
                     logger.log("SAUVEGARDE", "Données de la bibliothèque sauvegardées.");
                 } else {
@@ -270,18 +273,32 @@ int main(int argc, char* argv[]) {
                 pauseForInput();
                 break;
             }
-            
-            case 13: { // Create Backup
-                fileManager.createBackup();
-                logger.log("SAUVEGARDE", "Sauvegarde de la bibliothèque effectuée.");
+
+            case 13: {
+                if (!canSaveData) {
+                    cout << "Impossible de créer une sauvegarde : aucun répertoire de données (--data-dir).\n";
+                    logger.log("ERREUR SAUVEGARDE", "Répertoire de données non spécifié.");
+                } else {
+                    fileManager.createBackup();
+                    logger.log("SAUVEGARDE", "Sauvegarde de la bibliothèque effectuée.");
+                }
                 pauseForInput();
                 break;
             }
             
             case 0: // Exit
-                cout << "Sauvegarde des données avant la fermeture...\n";
-                fileManager.saveLibraryData(library);
-                logger.log("FERMETURE", "Sauvegarde des données effectuée.");
+                 if (canSaveData) {
+                    cout << "Sauvegarde des données avant la fermeture...\n";
+                    if (fileManager.saveLibraryData(library)) {
+                        logger.log("FERMETURE", "Sauvegarde des données effectuée.");
+                    } else {
+                        cout << "Erreur lors de la sauvegarde des données.\n";
+                        logger.log("ERREUR SAUVEGARDE", "Échec de la sauvegarde à la fermeture.");
+                    }
+                } else {
+                    cout << "Aucun répertoire de données (--data-dir) : les données ne sont pas sauvegardées.\n";
+                    logger.log("FERMETURE", "Aucune sauvegarde : répertoire de données non spécifié.");
+                }
                 cout << "Merci d'avoir utilisé le Système de Gestion de Bibliothèque Personnelle !\n";
                 running = false;
                 break;
