@@ -188,7 +188,7 @@ int main(int argc, char* argv[]) {
                 logger.log("AFFICHAGE", "Affichage de tous les livres.");
                 pauseForInput();
                 break;
-            
+    
             case 6: // Display Available Books
                 library.displayAvailableBooks();
                 logger.log("AFFICHAGE", "Affichage des livres disponibles.");
