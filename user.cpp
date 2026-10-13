@@ -85,7 +85,15 @@ void User::fromFileFormat(const string& line) {
     
     getline(ss, name, '|');
     getline(ss, userId, '|');
-    
+    // Garder le compteur au-dessus des ID deja chargés ("user_N")
+    if (userId.rfind("user_", 0) == 0) {
+        try {
+            int num = stoi(userId.substr(5));
+            if (num >= nextUserId) {
+                nextUserId = num + 1;
+            }
+        } catch (...) {}
+    }
     string booksStr;
     getline(ss, booksStr, '|');
     
