@@ -16,3 +16,9 @@
 2026-10-12 17:15:51 - [FERMETURE] Sauvegarde des données effectuée.
 2026-10-12 17:17:59 - [DÉMARRAGE] Application démarrée.
 2026-10-12 17:18:03 - [AFFICHAGE] Affichage de tous les livres.
+2026-10-13 21:40:38 - [DÉMARRAGE] Application démarrée.
+2026-10-13 21:40:50 - [ERREUR RECHERCHE] Aucun livre trouvé avec le titre : Allen
+2026-10-13 21:41:40 - [AJOUT LIVRE] Livre ajouté : Les aventures des IG Sigmas (ISBN 9123864)
+2026-10-13 21:41:56 - [RECHERCHE] Résultats de la recherche par auteur : Joe Abi Chamma
+2026-10-13 21:42:11 - [SUPPRESSION LIVRE] Livre supprimé : 9123864
+2026-10-13 21:42:17 - [FERMETURE] Aucune sauvegarde : répertoire de données non spécifié.
