@@ -56,10 +56,6 @@ void printUsage(const char* programName) {
 
 int main(int argc, char* argv[]) {
     string dataDir;
-    string logFile = dataDir.empty() ? "journal.log"
-                                     : (filesystem::path(dataDir) / "journal.log").string();
-    Logger logger(logFile);
-    logger.log("DÉMARRAGE", "Application démarrée.");
     for (int i = 1; i < argc; ++i) {
         string arg = argv[i];
         if (arg == "--data-dir" || arg == "-d") {
@@ -87,7 +83,9 @@ int main(int argc, char* argv[]) {
         booksFile = (filesystem::path(dataDir) / "books.txt").string();
         usersFile = (filesystem::path(dataDir) / "users.txt").string();
     }
-
+    string logFile = dataDir.empty() ? "journal.log": (filesystem::path(dataDir) / "journal.log").string();
+    Logger logger(logFile);
+    logger.log("DÉMARRAGE", "Application démarrée.");
     Library library;
     FileManager fileManager(booksFile, usersFile);
     bool canSaveData = !booksFile.empty() && !usersFile.empty();

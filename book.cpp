@@ -77,14 +77,14 @@ void Book::returnBook() {
 
 //methode toString: retourne une chaine de caracteres representant le livre
 std::string Book::toString() const {
-    std::string stringPattern = "\nTitre: " + title + "\nAuteur(e): " + author + "\nISBN: " + isbn + "\nDisponible: " + (isAvailable ? "Oui " : "Non ") + (isAvailable ? "": ("Code de l'emprunteur: " + borrowerId));
-    return stringPattern;
+    std::string fileFormat = title + "|" + author + "|" + isbn + "|" + (isAvailable ? "1" : "0") + "|" + borrowerId;
+    return fileFormat;
 }
 
 
 //methode toFileFormat
 std::string Book::toFileFormat() const {
-    std::string fileFormat = title + "|" + author + "|" + isbn + "|" + (isAvailable ? "Oui" : "Non") + "|" + borrowerId;
+    std::string fileFormat = title + "|" + author + "|" + isbn + "|" + (isAvailable ? "1" : "0") + "|" + borrowerId;
     return fileFormat;
 }
 
